@@ -33,12 +33,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => HomePageWidget(),
+      errorBuilder: (context, state) => appStateNotifier.showSplashImage
+          ? Builder(
+              builder: (context) => Container(
+                color: Colors.transparent,
+                child: Image.asset(
+                  'assets/images/Sabor_Local_Explosao_(1).gif',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          : HomePageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => HomePageWidget(),
+          builder: (context, _) => appStateNotifier.showSplashImage
+              ? Builder(
+                  builder: (context) => Container(
+                    color: Colors.transparent,
+                    child: Image.asset(
+                      'assets/images/Sabor_Local_Explosao_(1).gif',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
+              : HomePageWidget(),
         ),
         FFRoute(
           name: HomePageWidget.routeName,
@@ -56,9 +76,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LoginWidget(),
         ),
         FFRoute(
-          name: CadastroCopyWidget.routeName,
-          path: CadastroCopyWidget.routePath,
-          builder: (context, params) => CadastroCopyWidget(),
+          name: EnderecoWidget.routeName,
+          path: EnderecoWidget.routePath,
+          builder: (context, params) => EnderecoWidget(),
+        ),
+        FFRoute(
+          name: TeladeiniciooWidget.routeName,
+          path: TeladeiniciooWidget.routePath,
+          builder: (context, params) => TeladeiniciooWidget(),
+        ),
+        FFRoute(
+          name: VerificacaoWidget.routeName,
+          path: VerificacaoWidget.routePath,
+          builder: (context, params) => VerificacaoWidget(),
+        ),
+        FFRoute(
+          name: TeladeusuarioWidget.routeName,
+          path: TeladeusuarioWidget.routePath,
+          builder: (context, params) => TeladeusuarioWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
